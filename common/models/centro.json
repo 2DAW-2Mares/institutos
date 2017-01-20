@@ -22,7 +22,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "anyoescolars": {
+      "type": "hasMany",
+      "model": "Anyoescolar",
+      "foreignKey": "centro"
+    },
+    "usuario": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }
