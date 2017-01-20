@@ -23,7 +23,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "tutorizados": {
+      "type": "hasMany",
+      "model": "Tutorizado",
+      "foreignKey": "tutor"
+    }
+  },
   "acls": [],
   "methods": {}
 }
