@@ -7,7 +7,23 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "materias": {
+      "type": "belongsTo",
+      "model": "Materia",
+      "foreignKey": "Materia"
+    },
+    "matriculas": {
+      "type": "belongsTo",
+      "model": "Matricula",
+      "foreignKey": "Matricula"
+    },
+    "usuarios": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "Usuario"
+    }
+  },
   "acls": [],
   "methods": {}
 }
