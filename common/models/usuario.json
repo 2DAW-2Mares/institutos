@@ -16,7 +16,39 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "centros": {
+      "type": "hasOne",
+      "model": "Centro",
+      "foreignKey": "coordinador"
+    },
+    "grupos": {
+      "type": "hasMany",
+      "model": "Grupo",
+      "foreignKey": "tutor"
+    },
+    "matriculas": {
+      "type": "hasMany",
+      "model": "Matricula",
+      "foreignKey": "alumno"
+    },
+    "materiaimpartidas": {
+      "type": "hasMany",
+      "model": "Materiaimpartida",
+      "foreignKey": "docente"
+    },
+    "materiamatriculadas": {
+      "type": "hasMany",
+      "model": "Materiamatriculada",
+      "foreignKey": "alumno",
+      "through": "Materiamatriculada"
+    },
+    "tutorizados": {
+      "type": "hasMany",
+      "model": "Tutorizado",
+      "foreignKey": "tutorado"
+    }
+  },
   "acls": [],
   "methods": {}
 }
