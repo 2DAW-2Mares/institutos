@@ -12,7 +12,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "grupos": {
+      "type": "hasMany",
+      "model": "Grupo",
+      "foreignKey": "nivel"
+    }
+  },
   "acls": [],
   "methods": {}
 }
