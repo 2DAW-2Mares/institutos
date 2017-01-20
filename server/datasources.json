@@ -1,0 +1,11 @@
+{
+  "db": {
+    "host": "localhost",
+    "port": 3306,
+    "database": "instituto",
+    "username": "root",
+    "password": "alumno",
+    "name": "db",
+    "connector": "mysql"
+  }
+}

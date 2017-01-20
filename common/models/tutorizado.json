@@ -1,0 +1,29 @@
+{
+  "name": "Tutorizado",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "tutorado": {
+      "type": "number",
+      "required": true
+    },
+    "tutor": {
+      "type": "number",
+      "required": true
+    },
+    "verificado": {
+      "type": "boolean"
+    },
+    "verificationToken": {
+      "type": "string",
+      "length": 512
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

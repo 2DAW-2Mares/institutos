@@ -1,0 +1,22 @@
+{
+  "name": "Anyoescolar",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fechainicio": {
+      "type": "date",
+      "required": true
+    },
+    "fechafinal": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

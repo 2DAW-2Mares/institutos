@@ -1,0 +1,35 @@
+{
+  "name": "Grupo",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "curso": {
+      "type": "number",
+      "required": false,
+      "length": null,
+      "precision": 1,
+      "scale": 0
+    },
+    "letra": {
+      "type": "string",
+      "required": false,
+      "length": null,
+      "precision": 1,
+      "scale": 0
+    },
+    "nombre": {
+      "type": "string",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
