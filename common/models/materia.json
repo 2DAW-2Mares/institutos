@@ -15,7 +15,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "materiasimpartidas": {
+      "type": "hasMany",
+      "model": "Materiaimpartida",
+      "foreignKey": "materia"
+    },
+    "materiasmatriculadas": {
+      "type": "hasMany",
+      "model": "Materiamatriculada",
+      "foreignKey": "materia"
+    }
+  },
   "acls": [],
   "methods": {}
 }

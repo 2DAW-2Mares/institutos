@@ -16,7 +16,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "centro": {
+      "type": "belongsTo",
+      "model": "Centro",
+      "foreignKey": "centro"
+    },
+    "grupos": {
+      "type": "hasMany",
+      "model": "Grupo",
+      "foreignKey": "anyoescolar"
+    }
+  },
   "acls": [],
   "methods": {}
 }

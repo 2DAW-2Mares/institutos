@@ -7,7 +7,23 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "docente": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "docente"
+    },
+    "grupo": {
+      "type": "belongsTo",
+      "model": "Grupo",
+      "foreignKey": "grupo"
+    },
+    "materia": {
+      "type": "belongsTo",
+      "model": "Materia",
+      "foreignKey": "materia"
+    }
+  },
   "acls": [],
   "methods": {}
 }

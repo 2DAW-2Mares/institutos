@@ -26,10 +26,45 @@
       "length": null,
       "precision": null,
       "scale": null
+    },
+    "verificado": {
+      "type": "boolean"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "anyoescolar": {
+      "type": "belongsTo",
+      "model": "Anyoescolar",
+      "foreignKey": "anyoescolar"
+    },
+    "nivel": {
+      "type": "belongsTo",
+      "model": "Nivel",
+      "foreignKey": "nivel"
+    },
+    "materiasimpartidas": {
+      "type": "hasMany",
+      "model": "Materiaimpartida",
+      "foreignKey": "grupo"
+    },
+    "materiasmatriculadas": {
+      "type": "hasMany",
+      "model": "Materiamatriculada",
+      "foreignKey": "grupo"
+    },
+    "alumnos": {
+      "type": "hasMany",
+      "model": "Usuario",
+      "foreignKey": "grupo",
+      "through": "Matricula"
+    },
+    "creador": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "creador"
+    }
+  },
   "acls": [],
   "methods": {}
 }

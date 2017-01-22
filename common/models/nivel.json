@@ -16,7 +16,12 @@
     "grupos": {
       "type": "hasMany",
       "model": "Grupo",
-      "foreignKey": "nivel"
+      "foreignKey": "grupo"
+    },
+    "subniveles": {
+      "type": "hasMany",
+      "model": "Nivel",
+      "foreignKey": "nivelsuperior"
     }
   },
   "acls": [],

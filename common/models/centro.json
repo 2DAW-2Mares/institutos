@@ -19,19 +19,22 @@
     },
     "situacion": {
       "type": "geopoint"
+    },
+    "verificado": {
+      "type": "boolean"
     }
   },
   "validations": [],
   "relations": {
-    "anyoescolars": {
+    "cursosescolares": {
       "type": "hasMany",
       "model": "Anyoescolar",
       "foreignKey": "centro"
     },
-    "usuario": {
+    "coordinador": {
       "type": "belongsTo",
       "model": "Usuario",
-      "foreignKey": ""
+      "foreignKey": "coordinador"
     }
   },
   "acls": [],

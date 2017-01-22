@@ -7,7 +7,18 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "alumno": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "alumno"
+    },
+    "grupo": {
+      "type": "belongsTo",
+      "model": "Grupo",
+      "foreignKey": "grupo"
+    }
+  },
   "acls": [],
   "methods": {}
 }

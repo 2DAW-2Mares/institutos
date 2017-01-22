@@ -17,7 +17,7 @@
   },
   "validations": [],
   "relations": {
-    "centros": {
+    "coordina": {
       "type": "hasOne",
       "model": "Centro",
       "foreignKey": "coordinador"
@@ -29,24 +29,34 @@
     },
     "matriculas": {
       "type": "hasMany",
-      "model": "Matricula",
-      "foreignKey": "alumno"
+      "model": "Grupo",
+      "foreignKey": "alumno",
+      "through": "Matricula"
     },
-    "materiaimpartidas": {
+    "materiasimpartidas": {
       "type": "hasMany",
       "model": "Materiaimpartida",
       "foreignKey": "docente"
     },
-    "materiamatriculadas": {
+    "materiasmatriculadas": {
       "type": "hasMany",
       "model": "Materiamatriculada",
-      "foreignKey": "alumno",
-      "through": "Materiamatriculada"
+      "foreignKey": "alumno"
     },
     "tutorizados": {
       "type": "hasMany",
       "model": "Tutorizado",
       "foreignKey": "tutorado"
+    },
+    "tutoria": {
+      "type": "hasMany",
+      "model": "Grupo",
+      "foreignKey": "tutor"
+    },
+    "gruposcreados": {
+      "type": "hasMany",
+      "model": "Grupo",
+      "foreignKey": "creador"
     }
   },
   "acls": [],

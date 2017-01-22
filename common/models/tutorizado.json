@@ -6,14 +6,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "tutorado": {
-      "type": "number",
-      "required": true
-    },
-    "tutor": {
-      "type": "number",
-      "required": true
-    },
     "verificado": {
       "type": "boolean"
     },
@@ -24,9 +16,14 @@
   },
   "validations": [],
   "relations": {
-    "tutorizados": {
-      "type": "hasMany",
-      "model": "Tutorizado",
+    "tutorado": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "tutorado"
+    },
+    "tutor": {
+      "type": "belongsTo",
+      "model": "Usuario",
       "foreignKey": "tutor"
     }
   },
