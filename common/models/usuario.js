@@ -5,6 +5,20 @@ var path = require('path');
 
 module.exports = function(Usuario) {
 
+	Usuario.request_password_reset = function(email, cb) {
+		Usuario.resetPassword({
+			email: email
+		}, function(err) {
+			if (err) {
+				err = new Error('No existe el email');
+				err.statusCode = 401;
+				return cb(err);
+			}
+
+			return cb(null, 'Password reset requested. Check your email for further instructions')
+		});
+	};
+
 	//send verification email after registration
 	Usuario.afterRemote('create', function(context, usuario, next) {
 		console.log('> user.afterRemote triggered');
@@ -53,5 +67,23 @@ module.exports = function(Usuario) {
 			console.log('> sending password reset email to:', info.email);
 		});
 	});
+
+	Usuario.remoteMethod(
+		'request_password_reset', {
+			description: 'Solicita el reseteo de la contraseña.',
+			accepts: [{
+				arg: 'email',
+				type: 'string'
+			}, ],
+			returns: {
+				arg: 'msg',
+				type: 'string'
+			},
+			http: {
+				path: '/request_password_reset',
+				verb: 'post'
+			},
+		}
+	);
 
 };

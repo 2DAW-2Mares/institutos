@@ -1,5 +1,5 @@
 module.exports = function(app) {
-
+/*
   var lbTables = ['User', 'AccessToken', 'ACL', 'RoleMapping', 'Role'];
   app.dataSources.db.automigrate(lbTables, function(er) {
     if (er) throw er;
@@ -12,4 +12,4 @@ module.exports = function(app) {
     console.log('Loopback tables [' , institutosTables , '] created in ', app.dataSources.db.adapter.name);
   });
 
-};
+*/};
