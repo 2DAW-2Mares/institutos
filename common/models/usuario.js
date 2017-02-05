@@ -19,6 +19,15 @@ module.exports = function(Usuario) {
 		});
 	};
 
+	Usuario.reset_password_get = function(accessToken, cb) {
+		if (!accessToken) {
+			err = new Error('No existe el usuario');
+			err.statusCode = 404;
+			return cb(err);
+		}
+		return cb(null, accessToken.id);
+	};
+
 	//send verification email after registration
 	Usuario.afterRemote('create', function(context, usuario, next) {
 		console.log('> user.afterRemote triggered');
@@ -53,7 +62,7 @@ module.exports = function(Usuario) {
 
 	//send password reset link when requested
 	Usuario.on('resetPasswordRequest', function(info) {
-		var url = 'http://' + config.host + ':' + config.port + '/reset-password';
+		var url = 'http://' + config.host + ':' + config.port + '/api/usuarios/reset_password';
 		var html = 'Click <a href="' + url + '?access_token=' +
 			info.accessToken.id + '">here</a> to reset your password';
 
@@ -82,6 +91,31 @@ module.exports = function(Usuario) {
 			http: {
 				path: '/request_password_reset',
 				verb: 'post'
+			},
+		}
+	);
+
+	Usuario.remoteMethod(
+		'reset_password_get', {
+			description: 'Mostrar el formulario para el cambio de contraseña.',
+			accepts: [{
+				arg: 'access_token',
+				type: 'object',
+				required: true,
+				http: function(ctx) {
+					var req = ctx && ctx.req;
+					var accessToken = req && req.accessToken;
+
+					return accessToken;
+				}
+			}, ],
+			returns: {
+				arg: 'tokenId',
+				type: 'string'
+			},
+			http: {
+				path: '/reset_password',
+				verb: 'get'
 			},
 		}
 	);
