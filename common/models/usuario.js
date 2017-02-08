@@ -19,13 +19,16 @@ module.exports = function(Usuario) {
 		});
 	};
 
-	Usuario.reset_password_get = function(accessToken, cb) {
+	Usuario.reset_password_get = function(accessToken, res, cb) {
 		if (!accessToken) {
 			err = new Error('No existe el usuario');
 			err.statusCode = 404;
 			return cb(err);
 		}
-		return cb(null, accessToken.id);
+	    return res.render('password-reset', {
+	      accessToken: accessToken.id
+    	});
+
 	};
 
 	Usuario.reset_password_post = function(passwords, accessToken, cb) {
@@ -96,7 +99,7 @@ module.exports = function(Usuario) {
 
 	//send password reset link when requested
 	Usuario.on('resetPasswordRequest', function(info) {
-		var url = 'http://' + config.host + ':' + config.port + '/api/usuarios/reset_password';
+		var url = 'http://' + config.host + ':' + config.port + '/api/Usuarios/reset_password';
 		var html = 'Click <a href="' + url + '?access_token=' +
 			info.accessToken.id + '">here</a> to reset your password';
 
@@ -141,6 +144,14 @@ module.exports = function(Usuario) {
 					var accessToken = req && req.accessToken;
 
 					return accessToken;
+				}
+			}, {
+				arg: 'res',
+				type: 'object',
+				required: true,
+				http: function(ctx) {
+					var res = ctx && ctx.res;
+					return res;
 				}
 			}, ],
 			returns: {
