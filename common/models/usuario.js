@@ -31,7 +31,7 @@ module.exports = function(Usuario) {
 
 	};
 
-	Usuario.reset_password_post = function(passwords, accessToken, cb) {
+	Usuario.reset_password_post = function(passwords, accessToken, cb, err) {
 		if (!accessToken) {
 			err = new Error('No existe el usuario');
 			err.statusCode = 404;
@@ -43,7 +43,7 @@ module.exports = function(Usuario) {
 			!passwords.confirmation ||
 			passwords.password !== passwords.confirmation) {
 			err = new Error('Contraseñas incorrrectas');
-			err.statusCode = 404;
+			err.statusCode = 400;
 			return cb(err);
 		}
 
