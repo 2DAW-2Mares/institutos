@@ -10,7 +10,7 @@ module.exports = function(Usuario) {
 			email: email
 		}, function(err) {
 			if (err) {
-				err = new Error('No existe el email');
+				var err = new Error('No existe el email');
 				err.statusCode = 401;
 				return cb(err);
 			}
@@ -21,7 +21,7 @@ module.exports = function(Usuario) {
 
 	Usuario.reset_password_get = function(accessToken, res, cb) {
 		if (!accessToken) {
-			err = new Error('No existe el usuario');
+			var err = new Error('No existe el usuario');
 			err.statusCode = 404;
 			return cb(err);
 		}
@@ -31,9 +31,9 @@ module.exports = function(Usuario) {
 
 	};
 
-	Usuario.reset_password_post = function(passwords, accessToken, cb, err) {
+	Usuario.reset_password_post = function(passwords, accessToken, cb) {
 		if (!accessToken) {
-			err = new Error('No existe el usuario');
+			var err = new Error('No existe el usuario');
 			err.statusCode = 404;
 			return cb(err);
 		}
@@ -42,20 +42,20 @@ module.exports = function(Usuario) {
 		if (!passwords.password ||
 			!passwords.confirmation ||
 			passwords.password !== passwords.confirmation) {
-			err = new Error('Contraseñas incorrrectas');
+			var err = new Error('Contraseñas incorrrectas');
 			err.statusCode = 400;
 			return cb(err);
 		}
 
 		Usuario.findById(accessToken.userId, function(err, user) {
 			if (err) {
-				err = new Error('No existe el usuario');
+				var err = new Error('No existe el usuario');
 				err.statusCode = 404;
 				return cb(err);
 			}
 			user.updateAttribute('password', passwords.password, function(err, user) {
 				if (err) {
-					err = new Error('Error al actualizar al usuario');
+					var err = new Error('Error al actualizar al usuario');
 					err.statusCode = 404;
 					return cb(err);
 				}
