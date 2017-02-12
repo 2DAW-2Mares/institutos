@@ -17,8 +17,14 @@ module.exports = {
   isDevEnv: isDevEnv,
 /*  indexFile: require.resolve(isDevEnv ?
     '../client/ngapp/index.html' : '../client/dist/index.html'),
-*/  port: GLOBAL_CONFIG.port,
+*/
+  port: GLOBAL_CONFIG.port,
   legacyExplorer: GLOBAL_CONFIG.legacyExplorer,
+  
+  admin: {
+  	email: process.env.ADMIN_EMAIL,
+  	password: process.env.ADMIN_PASSWORD
+  },
 
   db: {
     connector: 'mysql',
