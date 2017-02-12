@@ -1,5 +1,16 @@
 'use strict';
 
 module.exports = function(Centro) {
+	Centro.observe('before save', function removeUnwantedField(ctx, next) {
+		if (ctx.isNewInstance) {
+			if (ctx.instance) {
+				ctx.instance.unsetAttribute('verificado');
+			} else {
+				delete ctx.data.verificado;
+			}
+		}
+		next();
+	});
+
 
 };
