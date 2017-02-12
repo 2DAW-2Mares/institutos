@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../../server/config.json');
+var config = require('../../server/config.local.js');
 var path = require('path');
 
 module.exports = function(Usuario) {
@@ -72,7 +72,7 @@ module.exports = function(Usuario) {
 		var options = {
 			type: 'email',
 			to: usuario.email,
-			from: 'noreply@loopback.com',
+			from: config.emailDs.transports[0].auth.user,
 			subject: 'Thanks for registering.',
 			template: path.resolve(__dirname, '../../server/views/verify.ejs'),
 			redirect: '/verified',
@@ -99,7 +99,7 @@ module.exports = function(Usuario) {
 
 	//send password reset link when requested
 	Usuario.on('resetPasswordRequest', function(info) {
-		var url = 'http://' + config.host + ':' + config.port + '/api/Usuarios/reset_password';
+		var url = 'http://' + config.hostname + ':' + config.port + '/api/Usuarios/reset_password';
 		var html = 'Click <a href="' + url + '?access_token=' +
 			info.accessToken.id + '">here</a> to reset your password';
 
