@@ -37,4 +37,43 @@ module.exports = function(Centro) {
 		});
 	});
 
+	Centro.validar_centro = function(idCentro, cb) {
+		Centro.findById(idCentro, function(err, centro) {
+			if (err) {
+				var err = new Error('No existe el usuario');
+				err.statusCode = 404;
+				return cb(err);
+			}
+			centro.updateAttribute('verificado', true, function(err, centro) {
+				if (err) {
+					var err = new Error('Error al verificar el centro');
+					err.statusCode = 404;
+					return cb(err);
+				}
+				console.log('> Centro verificado correctamente');
+				return cb(null, 'Centro verificado correctamente')
+			});
+		});
+
+	};
+
+	Centro.remoteMethod(
+		'validar_centro', {
+			description: 'Valida un centro. Lo debe hacer un administrador',
+			accepts: [{
+				arg: 'idCentro',
+				type: 'integer',
+				required: true
+			}],
+			returns: {
+				arg: 'msg',
+				type: 'string'
+			},
+			http: {
+				path: '/validar-centro',
+				verb: 'put'
+			},
+		}
+	);
+
 };
