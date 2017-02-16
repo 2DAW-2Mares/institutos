@@ -40,7 +40,7 @@ module.exports = function(Centro) {
 	Centro.validar_centro = function(idCentro, cb) {
 		Centro.findById(idCentro, function(err, centro) {
 			if (err) {
-				var err = new Error('No existe el usuario');
+				var err = new Error('No existe ningún centro con ese id');
 				err.statusCode = 404;
 				return cb(err);
 			}
