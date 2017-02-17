@@ -59,7 +59,7 @@
       "foreignKey": "grupo",
       "through": "Matricula"
     },
-    "creador": {
+    "userId": {
       "type": "belongsTo",
       "model": "Usuario",
       "foreignKey": "creador"

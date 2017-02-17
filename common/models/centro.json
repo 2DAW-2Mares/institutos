@@ -41,7 +41,7 @@
       "model": "Anyoescolar",
       "foreignKey": "centro"
     },
-    "coordinador": {
+    "userId": {
       "type": "belongsTo",
       "model": "Usuario",
       "foreignKey": "coordinador"
