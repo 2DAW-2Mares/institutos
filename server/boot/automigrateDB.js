@@ -44,15 +44,6 @@ module.exports = function(app) {
                   console.log(principal);
                 });
               });
-              // Create the coordinador role
-              Role.create({
-                name: 'coordinador'
-              }, function(err, role) {
-                if (err) throw err;
-                console.log(role);
-
-              });
-              //--cierra rol coordinador
             });
           }
         });

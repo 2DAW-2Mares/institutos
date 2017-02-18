@@ -8,7 +8,20 @@ module.exports = function(app) {
       //Si no es user devuelve un false
       return process.nextTick(() => cb(null, false));
     }
-  
+    //El usuario debe estar como creador de un centro
+  var centro = app.models.Centro;
+      centro.count({
+        verificado:true,
+        userId: userId
+      }, function(err, count) {
+        if (err) return cb(err);
+        if(count > 0){
+          // Si count lo ha encontrado devuelve true, luego es "coordinador"
+          return cb(null, true);
+        }else{
+          return cb(null, false);
+        }
+    });
     
   });
 }
