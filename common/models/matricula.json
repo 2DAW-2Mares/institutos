@@ -13,7 +13,7 @@
       "model": "Usuario",
       "foreignKey": "alumno"
     },
-    "grupo": {
+    "grupoId": {
       "type": "belongsTo",
       "model": "Grupo",
       "foreignKey": "grupo"

@@ -13,12 +13,12 @@
       "model": "Usuario",
       "foreignKey": "docente"
     },
-    "grupo": {
+    "grupoId": {
       "type": "belongsTo",
       "model": "Grupo",
       "foreignKey": "grupo"
     },
-    "materia": {
+    "materiaId": {
       "type": "belongsTo",
       "model": "Materia",
       "foreignKey": "materia"

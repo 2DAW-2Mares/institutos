@@ -33,12 +33,12 @@
   },
   "validations": [],
   "relations": {
-    "anyoescolar": {
+    "anyoescolarId": {
       "type": "belongsTo",
       "model": "Anyoescolar",
       "foreignKey": "anyoescolar"
     },
-    "nivel": {
+    "nivelId": {
       "type": "belongsTo",
       "model": "Nivel",
       "foreignKey": "nivel"
