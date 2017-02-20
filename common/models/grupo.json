@@ -33,12 +33,12 @@
   },
   "validations": [],
   "relations": {
-    "anyoescolar": {
+    "anyoescolarId": {
       "type": "belongsTo",
       "model": "Anyoescolar",
       "foreignKey": "anyoescolar"
     },
-    "nivel": {
+    "nivelId": {
       "type": "belongsTo",
       "model": "Nivel",
       "foreignKey": "nivel"
@@ -84,6 +84,20 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "coordinador",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "updateAll"
     }
   ],
   "methods": {}

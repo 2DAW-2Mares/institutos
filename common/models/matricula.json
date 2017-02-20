@@ -13,7 +13,7 @@
       "model": "Usuario",
       "foreignKey": "alumno"
     },
-    "grupo": {
+    "grupoId": {
       "type": "belongsTo",
       "model": "Grupo",
       "foreignKey": "grupo"
@@ -31,6 +31,13 @@
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "create"
     }
   ],
   "methods": {}
