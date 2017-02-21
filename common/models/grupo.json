@@ -81,7 +81,7 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "$grupoVerificado",
       "permission": "ALLOW",
       "property": "create"
     },
@@ -95,7 +95,7 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "$grupoVerificado",
       "permission": "ALLOW",
       "property": "updateAll"
     }
