@@ -1,4 +1,5 @@
 module.exports = function(app) {
+
   var Role = app.models.Role;
 
   Role.registerResolver('tutor', function(role, context, cb) {
@@ -15,18 +16,19 @@ module.exports = function(app) {
     var tutorizado = app.models.Tutorizado;
     tutorizado.count({
       verificado: true,
-      userId: userId
+      tutor: userId
     }, function(err, count) {
       
-      if (err) return cb(err);
+          if (err) return cb(err);
 
-      if(count > 0){
-        return cb(null, true);
-      }
-		else{
-          return cb(null, false);
-        }
+          if(count > 0){
+            return cb(null, true);
+          }
+      		else{
+                return cb(null, false);
+              }
       });
   });
+
 };
 
