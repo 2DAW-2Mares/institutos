@@ -69,7 +69,7 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "profesor",
+      "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "create"
     },
