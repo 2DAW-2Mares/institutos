@@ -14,8 +14,11 @@
       "length": 512
     }
   },
+  
   "validations": [],
+
   "relations": {
+
     "tutorado": {
       "type": "belongsTo",
       "model": "Usuario",
@@ -26,6 +29,7 @@
       "model": "Usuario",
       "foreignKey": "tutor"
     }
+
   },
   "acls": [
     {
