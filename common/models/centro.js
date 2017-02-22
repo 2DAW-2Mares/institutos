@@ -4,7 +4,7 @@ var config = require('../../server/config.local.js');
 var path = require('path');
 
 module.exports = function(Centro) {
-	Centro.observe('before save', function removeUnwantedField(ctx, next) {
+	Centro.observe('before save', function (ctx, next) {
 		if (ctx.isNewInstance) {
 			if (ctx.instance) {
 				ctx.instance.unsetAttribute('verificado');

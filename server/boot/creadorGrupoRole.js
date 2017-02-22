@@ -1,7 +1,8 @@
 module.exports = function(app) {
   var Role = app.models.Role;
 
-  Role.registerResolver('creadorGrupo', function(role, context, cb) {
+  Role.registerResolver('creadorGrupo', function(role, context, cb) { 
+    console.log(context.property);
     //El usuario debe estar logueado
     var userId = context.accessToken.userId;
     if (!userId) {
@@ -12,10 +13,10 @@ module.exports = function(app) {
       var grupo = app.models.Grupo;
       grupo.count({
         verificado:true,
-        userId: userId
-      }, function(err, count) {
+        creador: userId
+      }, function(err, count) { console.log(count);
         if (err) return cb(err);
-        if(count > 0){
+        if(count > 0){ 
           // Si count lo ha encontrado devuelve true, luego es "creadorGrupo"
           return cb(null, true);
         }else{

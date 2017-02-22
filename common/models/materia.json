@@ -39,13 +39,6 @@
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "creadorGrupo",
-      "permission": "ALLOW",
-      "property": "create"
     }
   ],
   "methods": {}
