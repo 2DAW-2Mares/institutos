@@ -5,6 +5,7 @@ var path = require('path');
 var app = require('../../server/server.js');
 module.exports = function(Grupo) {
 
+
 	Grupo.observe('before save', function removeUnwantedField(ctx, next) {
 		if (ctx.isNewInstance) {
 			if (ctx.instance) {
@@ -15,7 +16,6 @@ module.exports = function(Grupo) {
 		}
 		next();
 	});
-
 
 	Grupo.afterRemote('create', function correoCoordinador(context,grupo,next) {
 		console.log('> materiaimpartida.afterRemote triggered');
