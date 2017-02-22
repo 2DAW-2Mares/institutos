@@ -52,5 +52,21 @@ module.exports = function(Grupo) {
 
 		})
 	});
+    
+    // el centro tiene que estar verificado
+    Grupo.observe('before save', function(ctx, next) {
+        var grupo = ctx.instance;
+        grupo.anyoescolarId(function(err, anyoescolar) {
+            if (err) throw err;
+            anyoescolar.centroId(function(err, centro) {
+                if(centro.verificado == true) {
+                    console.log("se ha creado un nuevo grupo correctamente");
+                    next();
+                } else {
+                    next(new Error("No se puede crear el grupo, el centro no está verificado"));
+                }
+            });
+        });
+    });
 };
 

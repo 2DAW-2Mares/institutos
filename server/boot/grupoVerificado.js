@@ -9,19 +9,6 @@ module.exports = function(app) {
             // el usuario tiene que estar autenticado
             return process.nextTick(() => cb(null, false));
         }
-        
-        // el centro tiene que estar verificado
-        var centro = app.models.Centro;
-        centro.count ({
-            verificado: true
-        }, function(err, count) {
-            if (err) return cb(err);
-            if(count > 0) {
-                // centro verificado
-                return cb(null, true);
-            } else {
-                return cb(null, false);
-            }
-        });
+        return cb(null, true);
     });
 };
