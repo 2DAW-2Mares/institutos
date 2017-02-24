@@ -11,7 +11,7 @@ module.exports = function(Materiaimpartida) {
                 if (err) throw err;
                 grupo.userId(function(err, creador) {
                     if (err) throw err;
-
+if(!creador.email) next();
                     // envio de correo al creador del grupo
                     var html = 'Nueva materia <strong>"'+materia.nombre+'"</strong>, asignada al grupo <strong>"'+grupo.nombre+'"</strong>';
                     Materiaimpartida.app.models.Email.send({
