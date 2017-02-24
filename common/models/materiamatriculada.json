@@ -5,7 +5,19 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "calificacion": {
+      "type": "number",
+      "required": false,
+      "length": null,
+      "precision": 1,
+      "scale": 0
+    },
+    "aprobado": {
+      "type": "boolean"
+    }
+
+  },
   "validations": [],
   "relations": {
     "userId": {

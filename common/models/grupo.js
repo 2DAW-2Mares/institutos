@@ -9,7 +9,7 @@ module.exports = function(Grupo) {
 	Grupo.observe('before save', function removeUnwantedField(ctx, next) {
 		if (ctx.isNewInstance) {
 			if (ctx.instance) {
-				ctx.instance.creador = ctx.options.accessToken.userId;
+				ctx.instance.creador = ctx.options && ctx.options.accessToken && ctx.options.accessToken.userId;
 			} else {
 				console.log("No se ha podido asignar el creador de grupo.")
 			}
@@ -53,20 +53,5 @@ module.exports = function(Grupo) {
 		})
 	});
     
-    // el centro tiene que estar verificado
-    Grupo.observe('before save', function(ctx, next) {
-        var grupo = ctx.instance;
-        grupo.anyoescolarId(function(err, anyoescolar) {
-            if (err) throw err;
-            anyoescolar.centroId(function(err, centro) {
-                if(centro.verificado == true) {
-                    console.log("se ha creado un nuevo grupo correctamente");
-                    next();
-                } else {
-                    next(new Error("No se puede crear el grupo, el centro no está verificado"));
-                }
-            });
-        });
-    });
 };
 
