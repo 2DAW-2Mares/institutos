@@ -1,5 +1,7 @@
 'use strict';
 
+var app = require('../../server/server.js');
+
 module.exports = function(Materiaimpartida) {
     Materiaimpartida.afterRemote('create', function(context, materiaimpartida, next) {
 		console.log('> materiaimpartida.afterRemote triggered');
@@ -28,4 +30,59 @@ module.exports = function(Materiaimpartida) {
             })
         })
     });
+
+    
+
+    Materiaimpartida.materiasImpartidas_Centro_get = function(idCentro,res, cb) {
+            
+        var Anyoescolar = app.models.Anyoescolar;
+        var Grupo = app.models.grupo;
+        var materiasimpartidas = app.models.materiasimpartidas;
+        var materia = app.models.materia;
+    
+        Anyoescolar.findOne({where: {centro: idCentro}}, function(err, anio) { 
+            if(err){
+                var err = new Error('No existe el anyoescolar');
+                err.statusCode = 404;
+                return cb(err);
+            }
+            Grupo.find({where: {Anyoescolar: anio.anyoescolar}}, function(err, grup) { 
+                if(err){
+                    var err = new Error('No existe el grupo');
+                    err.statusCode = 404;
+                    return cb(err);
+                }
+                Materiaimpartida.find({where: {grupo: grup.grupo}}, function(err, grup) { 
+                    if(err){
+                        var err = new Error('No existe la materiaImpartida');
+                        err.statusCode = 404;
+                        return cb(err);
+                    }
+              
+                });
+            });
+        });
+
+    return res.render();
+
+
+    };
+    Materiaimpartida.remoteMethod(
+        'materiasImpartidas_Centro_get', {
+            description: 'Listar Materias Impartidas por un grupo',
+            accepts: [{
+                arg: 'idCentro',
+                type: 'integer',
+                required: true
+            } ],
+            returns: {
+                arg: 'materiaId',
+                type: 'integer'
+            },
+            http: {
+                path: '/list_materiasImpartidas',
+                verb: 'get'
+            },
+        }
+    );
 };
