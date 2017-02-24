@@ -30,6 +30,7 @@ module.exports = function(app) {
 
       Materiaimpartida.count({
         'grupo': materiamatriculada.grupo,
+        'materia': materiamatriculada.materia,
         'docente': userId
       }, function(err, count) {
         // A: The datastore produced an error! Pass error to callback
