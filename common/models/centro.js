@@ -88,6 +88,61 @@ module.exports = function(Centro) {
 
 			});
 
+	//Obtener los alumnos matriculados en un centro en la fecha actual
+	Centro.alumnosMatriculados = function(id,cb){
+		var Anyoescolar = app.models.Anyoescolar;
+		var Grupo =  app.models.Grupo;
+		var Matricula = app.models.Matricula;
+		//Cogemos el año actual
+		var fecha = new Date();
+		var anoactual = fecha.getYear() + 1900;
+		Anyoescolar.findOne({	where: { and:[{ 
+									fechafinal:{ gt: fecha}},{ 
+									fechainicio:{ lt:fecha}}]}
+									},{
+								centro: id
+							},function(err, ano){
+			if (err) {
+				var err = new Error('No existe ese dicho curso actual para el centro especificado');
+				err.statusCode = 404;
+				return cb(err);
+			}
+			Grupo.find({ where:{ anyoescolar: ano.id}
+						},function(err, grupo){
+				if (err) {
+					var err = new Error('No existen grupos ese dicho año escolar en el centro especificado');
+					err.statusCode = 404;
+					return cb(err);
+				}
+				
+				Matricula.count( {grupo: id}, function(err, count) {
+		      		if (err) return cb(err);
+		      		return cb(null,("El número de alumnos matriculados es de " + count));
+		      	});
+
+			});
+		});
+	}
+
+	Centro.remoteMethod(
+		'alumnosMatriculados', {
+			description: 'Devuelve el número de alumnos matriculados, en un centro, en el año actual',
+			accepts: [{
+					arg: 'id',
+				type: 'integer',
+				required: true
+			}],
+			returns: {
+				arg: 'msg',
+				type: 'string'
+			},
+			http: {
+				path: '/:id/alumnosMatriculados',
+				verb: 'get'
+			},
+		}
+	);
+
 	Centro.remoteMethod(
 		'validar_centro', {
 			description: 'Valida un centro. Lo debe hacer un administrador',
