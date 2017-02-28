@@ -39,6 +39,7 @@ module.exports = function(Materiaimpartida) {
         var Grupo = app.models.grupo;
         var materiasimpartidas = app.models.materiasimpartidas;
         var materia = app.models.materia;
+        var response = [];
     
         Anyoescolar.findOne({where: {centro: idCentro}}, function(err, anio) { 
             if(err){
@@ -52,18 +53,22 @@ module.exports = function(Materiaimpartida) {
                     err.statusCode = 404;
                     return cb(err);
                 }
-                Materiaimpartida.find({where: {grupo: grup.grupo}}, function(err, grup) { 
+                Materiaimpartida.find({where: {grupo: grup.grupo}}, function(err, materiaimpartida) { 
                     if(err){
                         var err = new Error('No existe la materiaImpartida');
                         err.statusCode = 404;
                         return cb(err);
                     }
+                        for(var i = 0; i < materiaimpartida.length; i++){
+                         
+                              response += materiaimpartida[i].id;
+                        }
               
-                });
+                
             });
         });
-
-    return res.render();
+    return cb(response);
+   // return res.render();
 
 
     };
@@ -76,8 +81,8 @@ module.exports = function(Materiaimpartida) {
                 required: true
             } ],
             returns: {
-                arg: 'materiaId',
-                type: 'integer'
+                arg: 'materias',
+                type: 'Array'
             },
             http: {
                 path: '/list_materiasImpartidas',
