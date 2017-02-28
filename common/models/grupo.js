@@ -72,6 +72,35 @@ module.exports = function(Grupo) {
 	        }
         });
     });
+    Grupo.afterRemote('validar_grupo', function(context, grupo, next) {
+
+	   // for(var prop in context.args) console.log(context.args);
+	    //console.log(context.args.idgrupo+" - "+context.args.access_Token.userId)
+
+	    var Usuario = app.models.Usuario;
+	    Grupo.findById(context.args.idgrupo , function(err, grupo) {
+
+	        var html = '<h1>El grupo ' + grupo.nombre + ' se ha validado</h1>';
+
+	        Usuario.findById(grupo.creador , function(err, user) {
+
+	            Grupo.app.models.Email.send({
+	                to: user.email,
+	                from: config.emailDs.transports[0].auth.user,
+	                subject: 'Nuevo grupo registrado',
+	                text: 'El grupo ' + grupo.nombre + ' se ha validado',
+	                html: html
+	            }, function(err, mail) {
+	                if (err) throw err;
+	                console.log('email sent!');
+	                next();
+
+	            });
+	        });      
+	    });
+	     
+	});
+
     //El coordinador del centro puede validar los grupos creados en su centro.
 	Grupo.validar_grupo = function(idgrupo, accessToken, cb) {
 
