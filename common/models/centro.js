@@ -56,6 +56,37 @@ module.exports = function(Centro) {
 		});
 
 	};
+	//Enviar correo al coordinador para asignar sitio despues de validar
+	Centro.afterRemote('validar_centro', function correoCoordinador(context,centro ,next) {
+				
+		console.log('centro envio de email al coordinador');
+		console.log(centro);
+    Centro.findById(context.args.idCentro , function(err, centro) {
+				centro.userId(function(err, coordinador) {
+					console.log(coordinador);
+					if (err) next(err);
+
+
+					//El coordinador es:
+							console.log("Usuario Coordinador: " +coordinador.nombre + " Email: " + coordinador.email);
+							
+
+					var html = 'Nuevo centro <strong>"'+centro.nombre+'"</strong>, asignada al coordinador <strong>"'+coordinador.nombre+'"</strong>';
+                    Centro.app.models.Email.send({
+                        to: coordinador.email,
+                        from: config.admin.email,
+                        subject: 'Nuevo centro asignado al Coordinador '+coordinador.nombre,
+                        html: html
+                    }, function(err) {
+                        if (err) return console.log('> error al enviar el email');
+                        console.log('> se ha enviado correctamente');
+                        next(); // evita enviar correos multiples
+                    });
+					
+				})
+})
+
+			});
 
 	Centro.remoteMethod(
 		'validar_centro', {
