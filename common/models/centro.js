@@ -2,6 +2,7 @@
 
 var config = require('../../server/config.local.js');
 var path = require('path');
+var app = require('../../server/server.js');
 
 module.exports = function(Centro) {
 	Centro.observe('before save', function (ctx, next) {
