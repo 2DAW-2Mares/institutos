@@ -9,7 +9,7 @@ module.exports = function(Grupo) {
 	Grupo.observe('before save', function removeUnwantedField(ctx, next) {
 		if (ctx.isNewInstance) {
 			if (ctx.instance) {
-				ctx.instance.creador = ctx.options.accessToken.userId;
+				ctx.instance.creador = ctx.options && ctx.options.accessToken && ctx.options.accessToken.userId;
 			} else {
 				console.log("No se ha podido asignar el creador de grupo.")
 			}
@@ -58,15 +58,90 @@ module.exports = function(Grupo) {
         var grupo = ctx.instance;
         grupo.anyoescolarId(function(err, anyoescolar) {
             if (err) throw err;
-            anyoescolar.centroId(function(err, centro) {
-                if(centro.verificado == true) {
-                    console.log("se ha creado un nuevo grupo correctamente");
-                    next();
-                } else {
-                    next(new Error("No se puede crear el grupo, el centro no está verificado"));
-                }
-            });
+	        if(anyoescolar){
+	            anyoescolar.centroId(function(err, centro) {
+	                if(centro.verificado == true) {
+	                    console.log("se ha creado un nuevo grupo correctamente");
+	                    next();
+	                } else {
+	                    next(new Error("No se puede crear el grupo, el centro no está verificado"));
+	                }
+	            });
+	        }else{
+	        	next(new Error("El valor es null"));
+	        }
         });
     });
+    //El coordinador del centro puede validar los grupos creados en su centro.
+	Grupo.validar_grupo = function(idgrupo, accessToken, cb) {
+
+	    if (!accessToken) {             
+	        var err = new Error('No existe el usuario');
+	        err.statusCode = 404;
+	        return cb(err);
+
+	    }
+	   
+	    var Anyoescolar = app.models.Anyoescolar;
+	    var Centro = app.models.Centro;
+
+	    Grupo.findById(idgrupo , function(err, grupo) {
+	        Anyoescolar.findById(grupo.id , function(err, anyoescolar) {
+	            Centro.findById(anyoescolar.centro, function(err, centro){
+	                //console.log("------------> "+centro.coordinador+" ------->"+accessToken.userId);
+	                if (accessToken.userId === centro.coordinador){
+	                
+	                    if (err) {
+	                        var err = new Error('No existe ningún grupo con ese id');
+	                        err.statusCode = 404;
+	                        return cb(err);
+	                    }
+	                    grupo.updateAttribute('verificado', true, function(err, grupo) {
+	                        if (err) {
+	                            var err = new Error('Error al verificar el grupo');
+	                            err.statusCode = 404;
+	                            return cb(err);
+	                        }
+	                        console.log('> grupo verificado correctamente');
+	                        return cb(null, 'grupo verificado correctamente')
+	                    });
+	                    
+	                }
+	            })
+	        })
+	    })
+	   
+	};
+
+	Grupo.remoteMethod(
+	    'validar_grupo', {
+	        description: 'Valida un grupo. Lo debe hacer un coordinador',
+	        accepts: [{
+	            arg: 'idgrupo',
+	            type: 'integer',
+	            required: true
+	        },{
+	            arg: 'access_token',
+	            type: 'object',
+	            required: true,
+	            http: function(ctx) {
+	                var req = ctx && ctx.req;
+	                var accessToken = req && req.accessToken;
+
+	                return accessToken;
+	            }
+	        },],
+	        returns: {
+	            arg: 'msg',
+	            type: 'string'
+	        },
+	        http: {
+	            path: '/validar-grupo',
+	            verb: 'put'
+	        },
+	    }
+	);
+
 };
 
+	

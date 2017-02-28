@@ -15,11 +15,8 @@
       "required": true
     }
   },
-
   "validations": [],
-
   "relations": {
-
     "coordina": {
       "type": "hasOne",
       "model": "Centro",
@@ -61,9 +58,7 @@
       "model": "Grupo",
       "foreignKey": "creador"
     }
-
   },
-  
   "acls": [
     {
       "accessType": "READ",

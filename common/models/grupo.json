@@ -98,6 +98,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "updateAll"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "coordinador",
+      "permission": "ALLOW",
+      "property": "validar_grupo"
     }
   ],
   "methods": {}
