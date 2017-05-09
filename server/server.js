@@ -12,6 +12,9 @@ var app = module.exports = loopback();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Integrando blur-admin
+app.set('admin_path',path.join(__dirname,'..','client','views','admin'+path.sep));
+
 // configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
 
