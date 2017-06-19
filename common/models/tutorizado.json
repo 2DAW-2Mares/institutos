@@ -16,12 +16,12 @@
   },
   "validations": [],
   "relations": {
-    "tutorado": {
+    "tutoradoId": {
       "type": "belongsTo",
       "model": "Usuario",
       "foreignKey": "tutorado"
     },
-    "tutor": {
+    "tutorId": {
       "type": "belongsTo",
       "model": "Usuario",
       "foreignKey": "tutor"

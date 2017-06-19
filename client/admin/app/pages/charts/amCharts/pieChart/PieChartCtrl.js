@@ -9,7 +9,34 @@
       .controller('PieChartCtrl', PieChartCtrl);
 
   /** @ngInject */
-  function PieChartCtrl($element, layoutPaths, baConfig) {
+  function PieChartCtrl($scope, $element, layoutPaths, baConfig, Centro, Grupo) {
+
+    $scope.datos = [];
+    $scope.centro = {
+      Centro:"",
+      Grupos:0,
+    }
+
+  $scope.centros = [];
+
+  function getCentros() {   
+    Centro
+      .find({
+        filter: {
+          include: "cursosescolares"
+        }
+      })
+      .$promise
+      .then(function(results) {
+          $scope.centros = $scope.centros.concat(results);
+          cargarDatos();
+      });
+    }
+
+    getCentros();
+
+    
+function dibujarGrafico (datos,maximo,minimo,margen) {
     var layoutColors = baConfig.colors;
     var id = $element[0].getAttribute('id');
     var pieChart = AmCharts.makeChart(id, {
@@ -50,42 +77,9 @@
           }
         ]
       },
-      dataProvider: [
-        {
-          country: 'Lithuania',
-          litres: 501.9
-        },
-        {
-          country: 'Czech Republic',
-          litres: 301.9
-        },
-        {
-          country: 'Ireland',
-          litres: 201.1
-        },
-        {
-          country: 'Germany',
-          litres: 165.8
-        },
-        {
-          country: 'Australia',
-          litres: 139.9
-        },
-        {
-          country: 'Austria',
-          litres: 128.3
-        },
-        {
-          country: 'UK',
-          litres: 99
-        },
-        {
-          country: 'Belgium',
-          litres: 60
-        }
-      ],
-      valueField: 'litres',
-      titleField: 'country',
+      dataProvider: datos,
+      valueField: 'Grupos',
+      titleField: 'Centros',
       export: {
         enabled: true
       },
@@ -104,7 +98,7 @@
         rules: [
           // at 900px wide, we hide legend
           {
-            maxWidth: 900,
+            maxWidth: maximo,
             overrides: {
               legend: {
                 enabled: false
@@ -114,15 +108,15 @@
 
           // at 200 px we hide value axis labels altogether
           {
-            maxWidth: 200,
+            maxWidth: minimo,
             overrides: {
               valueAxes: {
                 labelsEnabled: false
               },
-              marginTop: 30,
-              marginBottom: 30,
-              marginLeft: 30,
-              marginRight: 30
+              marginTop: margen,
+              marginBottom: margen,
+              marginLeft: margen,
+              marginRight: margen
             }
           }
         ]
@@ -143,6 +137,41 @@
       var wedge = e.dataItem.wedge.node;
       wedge.parentNode.appendChild(wedge);
     }
+}
+
+
+function cargarDatos() {
+  var cont=0;
+
+  angular.forEach($scope.centros, function(value, key) {
+    
+ if (value.cursosescolares.length > 0){
+
+  var nombre = value.nombre;
+         Grupo
+           .count ({
+            where: {
+            anyoescolar: value.cursosescolares[0].id
+          }
+        })
+      .$promise
+      .then(function(total){
+      $scope.centro = {
+        Centro:value.nombre,
+        Grupos:total.count
+      }
+        $scope.datos[cont] = ($scope.centro);
+        cont++;
+
+      dibujarGrafico($scope.datos,900,200,30);
+        
+      });
+
+  }
+  });
+
+}
+
   }
 
 })();

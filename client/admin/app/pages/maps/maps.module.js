@@ -15,7 +15,7 @@
           url: '/maps',
           templateUrl: 'app/pages/maps/maps.html',
           abstract: true,
-          title: 'Maps',
+          title: 'Mapas',
           sidebarMeta: {
             icon: 'ion-ios-location-outline',
             order: 500,

@@ -10,9 +10,12 @@ module.exports = function(Centro) {
 			if (ctx.instance) {
 				ctx.instance.unsetAttribute('verificado');
 				ctx.instance.coordinador = ctx.options && ctx.options.accessToken && ctx.options.accessToken.userId;
+				console.log(ctx.instance.coordinador);
+				
 			} else {
 				delete ctx.data.verificado;
 			}
+		} else {
 		}
 		next();
 	});
@@ -58,7 +61,7 @@ module.exports = function(Centro) {
 
 	};
 	//Enviar correo al coordinador para asignar sitio despues de validar
-	Centro.afterRemote('validar_centro', function correoCoordinador(context,centro ,next) {
+	/*Centro.afterRemote('validar_centro', function correoCoordinador(context,centro ,next) {
 				
 		console.log('centro envio de email al coordinador');
 		console.log(centro);
@@ -87,7 +90,7 @@ module.exports = function(Centro) {
 				})
 })
 
-			});
+			});*/
 
 	//Obtener los alumnos matriculados en un centro en la fecha actual
 	Centro.alumnosMatriculados = function(id,cb){

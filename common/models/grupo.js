@@ -29,7 +29,6 @@ module.exports = function(Grupo) {
 					console.log(coordinador);
 					if (err) next(err);
 
-
 					
 							console.log("Usuario Coordinador: " +coordinador.nombre + " Email: " + coordinador.email);
 							
@@ -53,9 +52,13 @@ module.exports = function(Grupo) {
 		})
 	});
     
-    // el centro tiene que estar verificado
+// el centro tiene que estar verificado
+/*
     Grupo.observe('before save', function(ctx, next) {
-        var grupo = ctx.instance;
+    	var grupo = ctx.instance;
+
+    	//ctx.instance devuelve undefined
+    	
         grupo.anyoescolarId(function(err, anyoescolar) {
             if (err) throw err;
 	        if(anyoescolar){
@@ -71,7 +74,8 @@ module.exports = function(Grupo) {
 	        	next(new Error("El valor es null"));
 	        }
         });
-    });
+});
+*/
     Grupo.afterRemote('validar_grupo', function(context, grupo, next) {
 
 	   // for(var prop in context.args) console.log(context.args);
@@ -115,10 +119,10 @@ module.exports = function(Grupo) {
 	    var Centro = app.models.Centro;
 
 	    Grupo.findById(idgrupo , function(err, grupo) {
-	        Anyoescolar.findById(grupo.id , function(err, anyoescolar) {
-	            Centro.findById(anyoescolar.centro, function(err, centro){
-	                //console.log("------------> "+centro.coordinador+" ------->"+accessToken.userId);
+	    	Anyoescolar.findById(grupo.anyoescolar , function(err, anyoescolar) {
+	    		Centro.findById(anyoescolar.centro, function(err, centro){
 	                if (accessToken.userId === centro.coordinador){
+	                console.log("------------> "+centro.coordinador+" ------->"+accessToken.userId);
 	                
 	                    if (err) {
 	                        var err = new Error('No existe ningún grupo con ese id');
@@ -141,6 +145,7 @@ module.exports = function(Grupo) {
 	    })
 	   
 	};
+
 
 	Grupo.remoteMethod(
 	    'validar_grupo', {

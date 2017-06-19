@@ -63,6 +63,11 @@
       "type": "belongsTo",
       "model": "Usuario",
       "foreignKey": "creador"
+    },
+    "tutorId": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "tutor"
     }
   },
   "acls": [

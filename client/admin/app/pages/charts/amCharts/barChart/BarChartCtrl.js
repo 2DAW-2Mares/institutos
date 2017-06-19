@@ -1,7 +1,3 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
 (function () {
   'use strict';
 
@@ -9,51 +5,51 @@
       .controller('BarChartCtrl', BarChartCtrl);
 
   /** @ngInject */
-  function BarChartCtrl($scope, baConfig, $element, layoutPaths) {
+  function BarChartCtrl($scope, baConfig, $element, layoutPaths, Centro, Grupo) {
+
+    $scope.datos = [];
+    $scope.centro = {
+      Centro:"",
+      Grupos:0,
+      color:""
+    }
+
+  $scope.centros = [];
+
+  function getCentros() {   
+    Centro
+      .find({
+        filter: {
+          include: "cursosescolares"
+        }
+      })
+      .$promise
+      .then(function(results) {
+          $scope.centros = $scope.centros.concat(results);
+          cargarDatos();
+      });
+    }
+
+    getCentros();
+
+  function dibujaGrafico (datos){
+
     var layoutColors = baConfig.colors;
+
     var id = $element[0].getAttribute('id');
     var barChart = AmCharts.makeChart(id, {
       type: 'serial',
       theme: 'blur',
       color: layoutColors.defaultText,
-      dataProvider: [
-        {
-          country: 'USA',
-          visits: 3025,
-          color: layoutColors.primary
-        },
-        {
-          country: 'China',
-          visits: 1882,
-          color: layoutColors.danger
 
-        },
-        {
-          country: 'Japan',
-          visits: 1809,
-          color: layoutColors.info
-        },
-        {
-          country: 'Germany',
-          visits: 1322,
-          color: layoutColors.success
-        },
-        {
-          country: 'UK',
-          visits: 1122,
-          color: layoutColors.warning
-        },
-        {
-          country: 'France',
-          visits: 1114,
-          color: layoutColors.primaryLight
-        }
-      ],
+
+      dataProvider: datos,
+
       valueAxes: [
         {
           axisAlpha: 0,
           position: 'left',
-          title: 'Visitors from country',
+          title: 'Grupos por centro',
           gridAlpha: 0.5,
           gridColor: layoutColors.border,
         }
@@ -64,9 +60,9 @@
           balloonText: '<b>[[category]]: [[value]]</b>',
           fillColorsField: 'color',
           fillAlphas: 0.7,
-          lineAlpha: 0.2,
+          lineAlpha: 1,
           type: 'column',
-          valueField: 'visits'
+          valueField: 'Grupos'
         }
       ],
       chartCursor: {
@@ -74,7 +70,7 @@
         cursorAlpha: 0,
         zoomable: false
       },
-      categoryField: 'country',
+      categoryField: 'Centro',
       categoryAxis: {
         gridPosition: 'start',
         labelRotation: 45,
@@ -87,5 +83,64 @@
       creditsPosition: 'top-right',
       pathToImages: layoutPaths.images.amChart
     });
+
   }
+
+
+function cargarDatos() {
+  var cont=0;
+  var layoutColors = baConfig.colors;
+
+  angular.forEach($scope.centros, function(value, key) {
+    
+ if (value.cursosescolares.length > 0){
+
+  var nombre = value.nombre;
+         Grupo
+           .count ({
+            where: {
+            anyoescolar: value.cursosescolares[0].id
+          }
+        })
+      .$promise
+      .then(function(total){
+
+      if (cont%3==0) {
+        $scope.centro = {
+          Centro:value.nombre,
+          Grupos:total.count,
+          color:layoutColors.primary
+        }
+      } else {
+        if (cont%2==0){
+          $scope.centro = {
+            Centro:value.nombre,
+            Grupos:total.count,
+            color:layoutColors.danger
+          }
+        }
+        else {
+          $scope.centro = {
+            Centro:value.nombre,
+            Grupos:total.count,
+            color:layoutColors.warning
+          }
+        }
+      }
+
+        $scope.datos[cont] = ($scope.centro);
+        cont++;
+
+      dibujaGrafico($scope.datos);
+        
+      });
+
+  }
+  });
+
+}
+
+
+}
+
 })();
